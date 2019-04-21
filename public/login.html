@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $.ajax({
+        url: '/api/items',
+        type: 'GET',
+        success: function(response){    // response contains json object in i
+            console.log(response.items.length);
+            console.log(response.items[0].name);
+            var Options = "<option selected>Select a host</option>";
+            for(var i = 0;i < response.items.length; i++) {
+              Options += "<option value='" + response.items[i].name + "'>" +
+              response.items[i].name + "</option>";
+            };
+            $("#customers").html(Options);
+            }
+        });
+
+      $.ajax({
+        url: '/api/recipes',
+        type: 'GET',
+        success: function(response){
+            console.log(response);
+            console.log(response.recipes.length);
+            console.log(response.recipes[0].name);
+            var Options = "<option selected>Select a host</option>";
+            for(var i = 0;i < response.recipes.length; i++) {
+              Options += "<option value='" + response.recipes[i].name + "'>" +
+              response.recipes[i].name + "</option>";
+            };
+            $("#servers").html(Options);
+            }
+        });
+    });
+
+    function getServers(){
+      $.ajax({
+      url: "/getServers?customer=" + $("#customers").val(),
+      type: 'GET',
+      success: function(response){    // response contains json object in i
+          var serverOptions = "<option selected>Select a Server</option>";
+          for(var i = 0;i < response.length; i++) {
+              serverOptions += "<option value='" + response[i].ServerName + "'>" +
+              response[i].ServerName + "</option>";
+            }
+          $("#servers").html(serverOptions);
+          }
+      });
+    }
+
+</script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a class="navbar-brand" href="/api/index">Home</a></li>
+        <li><a href='/api/itemspage'>View Items</a></li>
+        <li><a href='/api/recipespage'>View Recipes</a></li>
+        <li><a href='/api/viewShoppingList'>Manage Shopping List</a></li>
+        <li style="float:right"><a href='/api/userprofile'>User Profile</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<h2>User Profile</h2>
+
+<hr />
+
+<form method="POST" action="/api/login">
+  Username:<br>
+  <input type="text" name="username"><br>
+  Password:<br>
+  <input type="text" name="password"><br>
+  Email:<br>
+  <input type="text" name="email"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<hr/>
+<br>Register</br>
+<hr/>
+
+<form method="POST" action="/api/register">
+  Username:<br>
+  <input type="text" name="username"><br>
+  Password:<br>
+  <input type="text" name="password"><br>
+  Email:<br>
+  <input type="text" name="lastname"><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+<table class="table table-bordered table-dark table-striped" id="test">
+
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      $.ajax({
+        url: '/api/recipes',
+        type: 'GET',
+        success: function(response){    // response contains json object in i
+            var Options = "";
+            for(var i = 0;i < response.recipes.length; i++) {
+              Options += "<p><h4>" + response.recipes[i].name + "</h4>" +
+              "<b>Ingredients</b><ul>";
+              for(var j = 0; j < response.recipes[i].ingredients.length; j++) {
+                Options += "<li>" + response.recipes[i].ingredients[j] + "</li>";
+              };
+              Options += "</ul><b>Method</b><ul>";
+              for(var k = 0;k < response.recipes[i].method.length; k++) {
+                Options += "<li>" + response.recipes[i].method[k] + "</li>";
+              };
+              Options += "</ul></p><hr/>"
+            };
+            $("#recipes").html(Options);
+            }
+        });
+    });
+
+</script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a class="navbar-brand" href="/api/index">Home</a></li>
+        <li><a href='/api/itemspage'>View Items</a></li>
+        <li><a href='/api/recipespage'>View Recipes</a></li>
+        <li><a href='/api/viewShoppingList'>Manage Shopping List</a></li>
+        <li style="float:right"><a href='/api/userprofile'>User Profile</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <h2>Manage Recipes CRud</h2>
+
+  <hr />
+
+  <div>
+    <span id="recipes">
+    </span>
+  </div>
+
+  <form method="POST" action="/api/recipes">
+    <fieldset>
+      <legend>Add a new recipe:</legend>
+      Name:<br>
+      <input type="text" name="name"><br>
+      Ingredients:(Seperate by Spaces)<br>
+      <textarea name="ingredients" rows="2" cols="30">
+      </textarea><br>
+      Method:(Seperate by -)<br>
+      <textarea name="method" rows="7" cols="30"></textarea><br>
+      <input type="submit" value="Submit">
+    </fieldset>
+  </form>
+</body>
+
+</html>

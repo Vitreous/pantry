@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+        $.ajax({
+          url: '/api/items',
+          type: 'GET',
+          //data: 'page=' + btn_page,
+            success: function (itemResponse) {
+              //TODO Account for quantity
+              //Creates a list for items
+              var itemList =[];
+              for (var i = 0;i < itemResponse.items.length; i++) {
+                itemList.push(itemResponse.items[i].name);
+              }
+              $.ajax({
+                    url: '/api/recipes',
+                    type: 'GET',
+                    //data: 'page=' + a,
+                    success: function (recipes) {
+                      var webtxt = "";
+                      for (var i = 0;i < recipes.recipes.length; i++) {
+                        webtxt += "<h4><b>" + recipes.recipes[i].name + "</b></h4>";
+                        var flag = true;
+                        for(var j = 0; j < recipes.recipes[i].ingredients.length; j++) {
+                          //console.log(recipes.recipes[i].ingredients[j]);
+
+                          if(!itemList.includes(recipes.recipes[i].ingredients[j])){
+                            //console.log("Do not have " + recipes.recipes[i].ingredients[j]);
+                            flag = false;
+                            };
+                          };
+
+                          if(!flag){
+                            webtxt += "You cannot cook " + recipes.recipes[i].name
+                          } else {
+                            webtxt += "You can cook " + recipes.recipes[i].name
+                          }
+                          webtxt += "<br/><button type=\"button\" onClick=\"cookRecipe(\'" + recipes.recipes[i]._id + "\')\">Cook Me</button>"
+                      }
+                      $("#display").html(webtxt);
+                    }
+                });
+            }
+          });
+
+        $.ajax({
+          url: '/api/recipes',
+          type: 'GET',
+          success: function(response){    // response contains json object in i
+              var Options = "";
+              for(var i = 0;i < response.recipes.length; i++) {
+                Options += "<p><h4>" + response.recipes[i].name + "</h4>" +
+                "<b>Ingredients</b><ul>";
+                for(var j = 0; j < response.recipes[i].ingredients.length; j++) {
+                  Options += "<li>" + response.recipes[i].ingredients[j] + "</li>";
+                };
+                Options += "</ul></p><hr/>"
+              };
+              $("#recipes").html(Options);
+              }
+          });
+      });
+
+      function cookRecipe(value){
+        console.log("cookRecipe function with id value " + value)
+
+        $.ajax({
+          url: '/api/recipes/' + value,
+          type: 'GET',
+          success: function(response){    // response contains json object in i
+
+              console.log(response);
+              console.log(response.recipe.ingredients);
+
+              /*
+              var Options = "";
+              for(var i = 0;i < response.recipes.length; i++) {
+                Options += "<p><h4>" + response.recipes[i].name + "</h4>" +
+                "<b>Ingredients</b><ul>";
+                for(var j = 0; j < response.recipes[i].ingredients.length; j++) {
+                  Options += "<li>" + response.recipes[i].ingredients[j] + "</li>";
+                };
+                Options += "</ul></p><hr/>"
+              };
+              $("#recipes").html(Options);
+              */
+              }
+          });
+
+
+        /*$.ajax({
+        url: "/api/items/" + value,
+        type: 'DELETE',
+        success: function(response){
+          $.ajax({
+            url: '/api/items',
+            type: 'GET',
+            success: function(response){
+                if (response.items.length) {
+                  var Options = "<tr><th>Name</th><th>Quantity</th><th>Modify</th><th>Delete</th></tr>";
+                  for(var i = 0;i < response.items.length; i++) {
+                    Options += "<tr><td>" + response.items[i].name + "</td><td>" +
+                    response.items[i].quantity + "</td><td><button type='button'>Edit Me!</button></td>" +
+                    "<td><button type=\"button\" onclick=\"deleteItem(\'" + response.items[i]._id + "\')\">Delete Me!</button></td></tr>";
+                    };
+                  } else {
+                    var Options = "You have no items in your Pantry"
+                  }
+                $("#itemTable").html(Options);
+                }
+            });
+            }
+        });
+        */
+      };
+
+</script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a class="navbar-brand" href="/api/index">Home</a></li>
+        <li><a href='/api/itemspage'>View Items</a></li>
+        <li><a href='/api/recipespage'>View Recipes</a></li>
+        <li><a href='/api/viewShoppingList'>Manage Shopping List</a></li>
+        <li style="float:right"><a href='/api/userprofile'>User Profile</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<h2>Welcome ....</h2>
+<h2>Index | What you can cook now</h2>
+
+<hr />
+
+<div>
+  <span id="display">
+  </span>
+</div>
+
+<table class="table table-bordered table-dark table-striped" id="test">
+
+</table>
+
+30 Hours <br/>
+
+<hr/>
+
+Development CI/CD</br>
+
+<ul>
+  <li><b>10 Hr Plan           </b></li>
+  <li><b>Items Page           </b></li>
+  <li><b>Recipe Page          </b></li>
+  <li><b>Extra - Recipes      </b></li>
+  <li><b>HomePage formula 1/3 </b></li>
+  <li><b>HomePage formula 2/3 </b></li>
+  <li><b>HomePage formula 3/3 </b></li>
+  <li><b>Extra - Recipes      </b></li>
+  <li><b>Extra - Recipes      </b></li>
+  <li><b>Login 1/2            </b></li>
+  <li><b>.5 Hour Meeting Prep </b></li>
+
+  <li><b>20 Hr Plan           </b></li>
+  <li><b>Cognito Research     </b></li>
+  <li><b>Login 2/2            </b></li>
+  <li><b>Login working        </b></li>
+  <li><b>Delete Functionality of items </b></li>
+  <li><b>Code Cleanup</b></li>
+  <li><b>CookRecipe Function 1/x</b></li>
+  <li><b>CookRecipe Function 2/x</b></li>
+  <li><b>CookRecipe Function 3/x</b></li>
+  <li><b>Jenkins</b></li>
+
+
+  </b>
+
+  <li><i>9am - 9.30am</i></li>
+  <li>Development</li>
+
+  <li><i>9.30am - 10am</i></li>
+  <li>Development</li>
+
+  <li><i>10am - 10.30am</i></li>
+  <li>9 Hours Development</li>
+
+  <li><i>10.30am - 11am</i></li>
+  <li>9 Hours Development</li>
+
+
+  <li><i>11am - 11.30am</i></li>
+  <li><b>Break</b></li>
+
+
+  <li><i>11.30am - 12pm</i></li>
+  <li>9 Hours Development</li>
+
+  <li><i>12pm - 12.30pm</i></li>
+  <li>CookRecipe Function x/x</li>
+
+  <li><i>12.30pm - 1pm</i></li>
+  <li>9 Hours Development</li>
+
+  <li><i>1pm - 1.30pm</i></li>
+  <li>9 Hours Development</li>
+
+
+  <li><i>1.30pm - 2pm</i></li>
+  <li>9 Hours Development</li>
+
+  <li><i>2pm - 2.30pm</i></li>
+  <li>9 Hours Development</li>
+
+  <li><i>2.30pm - 3pm</i></li>
+  <li>Login Tokens</li>
+
+
+  <li><i>3pm - 3.30pm</i></li>
+  <li>Move Scripts</li>
+
+  <li><i>3.30pm - 4pm</i></li>
+  <li>Bootstrap</li>
+
+  <li><i>4pm - 4.30pm</i></li>
+  <li>Jenkins</li>
+
+  <li><i>4.30m - 5pm</i></li>
+  <li>Shopping List</li>
+
+
+  <li><i>5pm - 5.30pm</i></li>
+  <li>Development</li>
+
+  <li><i>5.30pm - 6pm</i></li>
+  <li>Development</li>
+
+  <li><i>6pm - 6.30pm</i></li>
+  <li>Development</li>
+
+  <li><i>6.30pm - 7pm</i></li>
+  <li>Development</li>
+
+
+  <li><i>7pm - 7.30pm</i></li>
+  <li>Development</li>
+
+  <li><i>7.30pm - 8pm</i></li>
+  <li>Development</li>
+
+  <li><i>8pm - 8.30pm</i></li>
+  <li>Development</li>
+
+  <li><i>8.30pm - 9pm</i></li>
+  <li>Development</li>
+
+
+  <li><i>9pm - 9.30pm</i></li>
+  <li>Development</li>
+
+  <li><i>9.30pm - 10pm</i></li>
+  <li>Development</li>
+
+</ul>
+
+Report </br>
+
+<ul>
+
+  <li><b>.5 Hour Meeting Prep</b></li>
+  <li><b>Document 1/6</b></li>
+  <li><b>Document 2/6</b></li>
+  <li><b>AWS & CI/CD 1/4 Research</b></li>
+  <li><b>AWS & CI/CD 2/4 Docker research</b></li>
+  <li><b>AWS & CI/CD 3/4 Docker file research</b></li>
+  <li><b>AWS & CI/CD 4/4 Site running in docker container</b></li>
+  <li><b>Jenkins 1/2</b></li>
+  <li><b>CodeDeploy Research</b></li>
+  <li><b>Testing 1/2</b></li>
+  <li><b>Testing 2/2</b></li>
+  <li><b>Document 3/6</b></li>
+
+  <li><i>10pm - 10.30pm</i></li>
+  <li>Sat - Document 4/6</li>
+
+  <li><i>10.30pm - 11pm</i></li>
+  <li>Sat - Document 5/6</li>
+
+  <li><i>11pm - 11.30pm</i></li>
+  <li>Sun - Document 6/6</li>
+
+  <li><i>11.30pm - 12am</i></li>
+  <li>Sun - Extra Document</li>
+
+  2af605374b22410e93aaab11257de64f
+  Admin - Password123
+
+</ul>
+</body>
+
+</html>

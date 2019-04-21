@@ -1,0 +1,57 @@
+<div class="list">
+
+    <div class="row">
+        <div class="col-lg-8 portfolio-item">
+            <div class="card h-100">
+                <div class="card-body">
+
+
+                    <h4 class="card-title">
+                            Your Inventory
+                    </h4>
+
+
+                    <div class="item" ng-class="{'editing-item': editing, 'edited': item.edited, 'completed': item.completed}"
+                         ng-repeat="item in items | orderBy: 'completed'" ng-init="item.completed = false">
+
+                        <!--<input ng-model="item.completed" type="checkbox"/>-->
+
+                        <span></span>
+                        {{item.name}}
+
+                        <!--<label ng-hide="editing">{{item.name}}</label>-->
+
+                        <!--<input ng-change="item.edited = true" ng-blur="editing = false;" ng-show="editing" ng-model="item.name" class="editing-label" type="text"/>-->
+
+                        <div class="actions">
+                            <!--<a href="" ng-click="editing = !editing">edit</a> -->
+                            <!--<a href="" ng-click="saveItem(item)">save</a> -->
+                            <a href="" ng-click="deleteItem(item, $index)"class="delete">delete</a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 portfolio-item">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        Add Items
+                    </h4>
+                    <div class="add">
+                        <a href="" ng-click="SendData()">+ Add a new item to the inventory</a>
+                        <input type="text" name="itemname" ng-model="itemname" required />
+                    </div>
+                    <p class="card-text">Enter your items in the checkbox</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{items}}
+
+</div>
