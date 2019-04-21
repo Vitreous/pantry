@@ -16,7 +16,3 @@ COPY . .
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
-
-
--p 3000:3000
-sudo docker run -d -p 3000:3000 7a9bf87f600c
