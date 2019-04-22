@@ -72,56 +72,29 @@
       });
 
       function cookRecipe(value){
-        console.log("cookRecipe function with id value " + value)
-
         $.ajax({
-          url: '/api/recipes/' + value,
+          url: '/api/recipe/' + value,
           type: 'GET',
           success: function(response){    // response contains json object in i
-
-              console.log(response);
-              console.log(response.recipe.ingredients);
-
-              /*
-              var Options = "";
-              for(var i = 0;i < response.recipes.length; i++) {
-                Options += "<p><h4>" + response.recipes[i].name + "</h4>" +
-                "<b>Ingredients</b><ul>";
-                for(var j = 0; j < response.recipes[i].ingredients.length; j++) {
-                  Options += "<li>" + response.recipes[i].ingredients[j] + "</li>";
-                };
-                Options += "</ul></p><hr/>"
-              };
-              $("#recipes").html(Options);
-              */
+              var itemList = response.recipe.ingredients
+              $.ajax({
+                url: '/api/items',
+                type: 'GET',
+                success: function(response){
+                    for(var i = 0;i < response.items.length; i++) {
+                      if(itemList.includes(response.items[i].name)){
+                        $.ajax({
+                          url: '/api/items/' + response.items[i]._id,
+                          type: 'DELETE',
+                          success: function(response){}
+                          });
+                        }
+                      };
+                    }
+                });
+                document.location.reload();
               }
           });
-
-
-        /*$.ajax({
-        url: "/api/items/" + value,
-        type: 'DELETE',
-        success: function(response){
-          $.ajax({
-            url: '/api/items',
-            type: 'GET',
-            success: function(response){
-                if (response.items.length) {
-                  var Options = "<tr><th>Name</th><th>Quantity</th><th>Modify</th><th>Delete</th></tr>";
-                  for(var i = 0;i < response.items.length; i++) {
-                    Options += "<tr><td>" + response.items[i].name + "</td><td>" +
-                    response.items[i].quantity + "</td><td><button type='button'>Edit Me!</button></td>" +
-                    "<td><button type=\"button\" onclick=\"deleteItem(\'" + response.items[i]._id + "\')\">Delete Me!</button></td></tr>";
-                    };
-                  } else {
-                    var Options = "You have no items in your Pantry"
-                  }
-                $("#itemTable").html(Options);
-                }
-            });
-            }
-        });
-        */
       };
 
 </script>
@@ -192,9 +165,6 @@ Development CI/CD</br>
   <li><b>git branch set up</b></li>
 
   </b>
-
-  <li><i>11am - 11.30am</i></li>
-  <li>9 Hours Development</li>
 
   <li><i>11.30am - 12pm</i></li>
   <li>9 Hours Development</li>

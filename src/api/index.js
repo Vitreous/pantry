@@ -66,7 +66,7 @@ router.get('/recipes', (req, res) => {
     })
 });
 
-router.get('/recipes/:id', (req, res) => {
+router.get('/recipe/:id', (req, res) => {
     var id = req.params.id
     Recipe.findById(id, (err, recipe) =>{
         if(err) {
