@@ -72,34 +72,27 @@
       });
 
       function cookRecipe(value){
-        console.log("cookRecipe function with id value " + value)
-
         $.ajax({
           url: '/api/recipe/' + value,
-          //url: '/api/recipes/' + value,
           type: 'GET',
           success: function(response){    // response contains json object in i
-
               var itemList = response.recipe.ingredients
-              console.log(response);
-              //console.log(response.recipe.ingredients);
-
               $.ajax({
                 url: '/api/items',
                 type: 'GET',
                 success: function(response){
                     for(var i = 0;i < response.items.length; i++) {
                       if(itemList.includes(response.items[i].name)){
-                        console.log(response.items[i].name);
                         $.ajax({
                           url: '/api/items/' + response.items[i]._id,
                           type: 'DELETE',
                           success: function(response){}
                           });
-                      }
-                    };
+                        }
+                      };
                     }
                 });
+                document.location.reload();
               }
           });
       };
