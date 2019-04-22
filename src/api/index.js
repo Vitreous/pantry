@@ -25,27 +25,27 @@ var router = express.Router();
 console.log("API route page loaded");
 
 router.get('/index', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\Pantry\\public\\index.html');
+    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
 });
 
 router.get('/login', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\Pantry\\public\\login.html');
+    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\login.html');
 });
 
 router.get('/itemspage', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\Pantry\\public\\items.html');
+    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\items.html');
 });
 
 router.get('/recipespage', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\Pantry\\public\\recipes.html');
+    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\recipes.html');
 });
 
 router.get('/viewShoppingList', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\Pantry\\public\\shoppinglist.html');
+    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\shoppinglist.html');
 });
 
 router.get('/userprofile', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\Pantry\\public\\userprofile.html');
+    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\userprofile.html');
 });
 
 router.get('/items', function(req, res) {
@@ -66,7 +66,7 @@ router.get('/recipes', (req, res) => {
     })
 });
 
-router.get('/recipes/:id', (req, res) => {
+router.get('/recipe/:id', (req, res) => {
     var id = req.params.id
     Recipe.findById(id, (err, recipe) =>{
         if(err) {
