@@ -43,7 +43,23 @@ router.get('/login', function(req, res) {
 
 router.get('/itemspage', function(req, res) {
     //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\items.html');
-    res.render('items');
+
+    var cognitoUser = userPool.getCurrentUser();
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function(err, session) {
+        if (err) {
+            alert(err);
+            return;
+        }
+        console.log('session validity: ' + session.isValid());
+
+      });
+      var user = {
+        name : cognitoUser.getUsername()
+      }
+    }
+
+    res.render('items', {user:user});
 });
 
 router.get('/recipespage', function(req, res) {
@@ -147,8 +163,8 @@ router.post('/login', function(req,res){
           },
           onFailure: function(err) {
               console.log(err);
-          },
-      });
+          }
+        });
 
       var user = {
         name : cognitoUser.getUsername()
@@ -158,15 +174,10 @@ router.post('/login', function(req,res){
 
   }
 
-  var user = {
-    name : "Bob"
-  }
-
   var userDetails = Login();
 
   //console.log(username);
 
-  //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
   res.render('index', {user:userDetails});
 
 });
@@ -182,6 +193,7 @@ router.post('/register', (req, res) =>{
 	      var attributeList = [];
 	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"preferred_username",Value:"jay"}));
 	      attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"email",Value:email}));
+        attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"custom:userID",Value:'Cookie Dough'}));
 
 	      userPool.signUp(username, password, attributeList, null, function(err, result){
 	          if (err) {
@@ -196,8 +208,7 @@ router.post('/register', (req, res) =>{
 	  };
 
 		RegisterUser(suppliedusername, suppliedpassword, suppliedemail);
-		res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
-
+    res.render('recipes')
 });
 
 

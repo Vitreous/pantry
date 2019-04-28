@@ -101,17 +101,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav">
-        <li><a class="navbar-brand" href="/api/index">Home</a></li>
-        <li><a href='/api/itemspage'>View Items</a></li>
-        <li><a href='/api/recipespage'>View Recipes</a></li>
-        <li><a href='/api/viewShoppingList'>Manage Shopping List</a></li>
-        <li style="float:right"><a href='/api/userprofile'>User Profile</a></li>
-      </ul>
-    </div>
-  </nav>
+
+<%- include('partials/header'); %>
 
 <h2>Welcome <%= user.name %></h2>
 <h2>Index | What you can't cook now</h2>
@@ -154,20 +145,6 @@ Development CI/CD</br></br>
 
   <li><i>2.30pm - 3pm</i></li>
   <li>Bootstrap</li>
-
-  <li><i><b>3pm - 7.30pm Gap</b></i></li>
-
-  <li><i>7.30pm - 8pm</i></li>
-  <li>Login</li>
-
-  <li><i>8pm - 8.30pm</i></li>
-  <li>Login</li>
-
-  <li><i>8.30pm - 9pm</i></li>
-  <li>Login</li>
-
-  <li><i>9pm - 9.30pm</i></li>
-  <li>Login</li>
 
 </ul>
 
@@ -227,6 +204,9 @@ Report docs.google.com</br></br>
   <li><b>Login UI</b></li>
   <li><b>Login UI</b></li>
   <li><b>Login UI</b></li>
+  <li><b>Login UI</b></li>
+  <li><b>Login Unique ID</b></li>
+  <li><b>Login Unique ID</b></li>
 
 
   <li><b>Document 1/6</b></li>
