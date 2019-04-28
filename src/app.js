@@ -8,6 +8,10 @@ var port = 3000;
 
 var app = express();
 
+app.set("view engine", "ejs");
+app.set("views", "C:\\Users\\Donal\\git\\Pantry\\public\\views");
+app.set("view options", { layout: false } );
+
 require('./database');
 
 app.use('/', express.static('public'));

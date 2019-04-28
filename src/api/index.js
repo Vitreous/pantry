@@ -25,27 +25,40 @@ var router = express.Router();
 console.log("API route page loaded");
 
 router.get('/index', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\userprofile.html');
+    //res.render('index');
+    res.render('login');
+});
+
+router.get('/ejstest', function(req, res) {
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
+    res.render('index');
 });
 
 router.get('/login', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\login.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\login.html');
+    res.render('login');
 });
 
 router.get('/itemspage', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\items.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\items.html');
+    res.render('items');
 });
 
 router.get('/recipespage', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\recipes.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\recipes.html');
+    res.render('recipes');
 });
 
 router.get('/viewShoppingList', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\shoppinglist.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\shoppinglist.html');
+    res.render('shoppinglist');
 });
 
 router.get('/userprofile', function(req, res) {
-    res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\userprofile.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\userprofile.html');
+    res.render('userprofile');
 });
 
 router.get('/items', function(req, res) {
@@ -111,19 +124,13 @@ router.post('/recipes', function(req, res) {
 
 router.post('/login', function(req,res){
 
-  console.log(req.body);
-
   function Login() {
       // https://medium.com/@prasadjay/amazon-cognito-user-pools-in-nodejs-as-fast-as-possible-22d586c5c8ec
-
       console.log("Hello From Login");
-
       var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
           Username : req.body.username,
           Password : req.body.password,
       });
-
-      console.log(authenticationDetails);
 
       var userData = {
           Username : req.body.username,
@@ -135,36 +142,46 @@ router.post('/login', function(req,res){
       cognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: function (result) {
               console.log('access token + ' + result.getAccessToken().getJwtToken());
-              console.log('id token + ' + result.getIdToken().getJwtToken());
+              //console.log('id token + ' + result.getIdToken().getJwtToken());
               console.log('refresh token + ' + result.getRefreshToken().getToken());
           },
           onFailure: function(err) {
               console.log(err);
           },
       });
+
+      var user = {
+        name : cognitoUser.getUsername()
+      }
+
+      return user;
+
   }
-  Login();
-  res.sendFile('C:\\Users\\Donal\\Pantry\\public\\index.html');
+
+  var user = {
+    name : "Bob"
+  }
+
+  var userDetails = Login();
+
+  //console.log(username);
+
+  //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
+  res.render('index', {user:userDetails});
+
 });
 
 router.post('/register', (req, res) =>{
 
 		console.log(req.body.username);
-
 		var suppliedusername = req.body.username;
 		var suppliedpassword = req.body.password;
 		var suppliedemail = req.body.email;
 
 	  function RegisterUser(username, password, email){
 	      var attributeList = [];
-	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"name",Value:"Prasad Jayashanka"}));
 	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"preferred_username",Value:"jay"}));
-	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"gender",Value:"male"}));
-	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"birthdate",Value:"1991-06-21"}));
-	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"address",Value:"CMB"}));
 	      attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"email",Value:email}));
-	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"phone_number",Value:"+5412614324321"}));
-	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"custom:scope",Value:"admin"}));
 
 	      userPool.signUp(username, password, attributeList, null, function(err, result){
 	          if (err) {
@@ -172,7 +189,6 @@ router.post('/register', (req, res) =>{
 	              return;
 	          }
 	          var cognitoUser = result.user;
-						console.log(cognitoUser);
 	          console.log('user name is ' + cognitoUser.getUsername());
 						var newUser = cognitoUser.getUsername();
 						return newUser
@@ -180,8 +196,7 @@ router.post('/register', (req, res) =>{
 	  };
 
 		RegisterUser(suppliedusername, suppliedpassword, suppliedemail);
-
-		res.sendFile('C:\\Users\\Donal\\Pantry\\public\\index.html');
+		res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
 
 });
 

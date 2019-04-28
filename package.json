@@ -15,8 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "amazon-cognito-identity-js": "^3.0.9",
+    "aws-amplify": "^1.1.26",
     "aws-sdk": "^2.418.0",
     "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
     "jwk-to-pem": "^2.0.1",
