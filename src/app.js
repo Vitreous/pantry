@@ -9,7 +9,7 @@ var port = 3000;
 var app = express();
 
 app.set("view engine", "ejs");
-app.set("views", "./usr/public/views");
+app.set("views", "./public/views");
 app.set("view options", { layout: false } );
 
 require('./database');
