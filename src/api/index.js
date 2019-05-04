@@ -112,7 +112,7 @@ router.post('/items', function(req, res) {
         if(err) {
             return res.status(500).json({err: err.message});
         }
-        res.sendFile('C:\\Users\\Donal\\Pantry\\public\\items.html');
+        res.render('items');
     })
 });
 
@@ -134,7 +134,7 @@ router.post('/recipes', function(req, res) {
         if(err) {
             return res.status(500).json({err: err.message});
         }
-        res.sendFile('C:\\Users\\Donal\\Pantry\\public\\recipes.html');
+        res.render('recipes');
     })
 });
 
@@ -234,7 +234,7 @@ router.delete('/items/:id', function(req, res) {
             return res.status(500).json({err: err.message});
         }
         console.log("Item Deleted");
-        res.sendFile('C:\\Users\\Donal\\Pantry\\public\\items.html');
+        res.render('items');
     })
 });
 
