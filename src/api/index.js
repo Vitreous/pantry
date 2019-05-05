@@ -3,6 +3,7 @@
 var express = require('express');
 var Item = require('../models/item');
 var Recipe = require('../models/recipe');
+var User = require('../models/user');
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
@@ -23,6 +24,13 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 var router = express.Router();
 
 console.log("API route page loaded");
+
+router.get('/', function(req, res) {
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
+    //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\userprofile.html');
+    //res.render('index');
+    res.render('login');
+});
 
 router.get('/index', function(req, res) {
     //res.sendFile('C:\\Users\\Donal\\git\\Pantry\\public\\index.html');
@@ -141,8 +149,6 @@ router.post('/recipes', function(req, res) {
 router.post('/login', function(req,res){
 
   function Login() {
-      // https://medium.com/@prasadjay/amazon-cognito-user-pools-in-nodejs-as-fast-as-possible-22d586c5c8ec
-      console.log("Hello From Login");
       var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
           Username : req.body.username,
           Password : req.body.password,
@@ -157,34 +163,45 @@ router.post('/login', function(req,res){
 
       cognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: function (result) {
-              console.log('access token + ' + result.getAccessToken().getJwtToken());
+              //console.log('access token + ' + result.getAccessToken().getJwtToken());
               //console.log('id token + ' + result.getIdToken().getJwtToken());
-              console.log('refresh token + ' + result.getRefreshToken().getToken());
+              //console.log('refresh token + ' + result.getRefreshToken().getToken());
+
+              User.find({username: cognitoUser.getUsername()}, function(err, res){
+                  if(err) {
+                      return res.status(500).json({err: err.message});
+                  }
+                  console.log(res._id);
+                  return res._id;
+              });
           },
           onFailure: function(err) {
               console.log(err);
           }
-        });
+      });
+
+      var userinfo = User.find({username: cognitoUser.getUsername()}, function(err, res){
+          if(err) {
+              return res.status(500).json({err: err.message});
+          }
+          console.log(res._id);
+          return res._id;
+      });
+
+      console.log("Temps +" + userinfo);
 
       var user = {
-        name : cognitoUser.getUsername()
+        name : cognitoUser.getUsername(),
+        id : res._id
       }
-
       return user;
-
   }
-
   var userDetails = Login();
-
   //console.log(username);
-
   res.render('index', {user:userDetails});
-
 });
 
 router.post('/register', (req, res) =>{
-
-		console.log(req.body.username);
 		var suppliedusername = req.body.username;
 		var suppliedpassword = req.body.password;
 		var suppliedemail = req.body.email;
@@ -193,7 +210,7 @@ router.post('/register', (req, res) =>{
 	      var attributeList = [];
 	      //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"preferred_username",Value:"jay"}));
 	      attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"email",Value:email}));
-        attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"custom:userID",Value:'Cookie Dough'}));
+        //attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name:"custom:userID",Value:'Cookie Dough'}));
 
 	      userPool.signUp(username, password, attributeList, null, function(err, result){
 	          if (err) {
@@ -203,7 +220,19 @@ router.post('/register', (req, res) =>{
 	          var cognitoUser = result.user;
 	          console.log('user name is ' + cognitoUser.getUsername());
 						var newUser = cognitoUser.getUsername();
-						return newUser
+
+            var user = {
+              username : newUser
+            };
+
+            console.log(user);
+
+            User.create(user, function(err, res){
+                if(err) {
+                    return res.status(500).json({err: err.message});
+                }
+                console.log(res);
+            });
 	      });
 	  };
 
