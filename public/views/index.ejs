@@ -5,14 +5,14 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
   <script>
     $(document).ready(function(){
         $.ajax({
-          url: '/api/items',
+          url: '/items',
           type: 'GET',
           //data: 'page=' + btn_page,
             success: function (itemResponse) {
@@ -23,7 +23,7 @@
                 itemList.push(itemResponse.items[i].name);
               }
               $.ajax({
-                    url: '/api/recipes',
+                    url: '/recipes',
                     type: 'GET',
                     //data: 'page=' + a,
                     success: function (recipes) {
@@ -54,7 +54,7 @@
           });
 
         $.ajax({
-          url: '/api/recipes',
+          url: '/recipes',
           type: 'GET',
           success: function(response){    // response contains json object in i
               var Options = "";
@@ -73,7 +73,7 @@
 
       function cookRecipe(value){
         $.ajax({
-          url: '/api/recipe/' + value,
+          url: '/recipes/' + value,
           type: 'GET',
           success: function(response){    // response contains json object in i
               var itemList = response.recipe.ingredients
@@ -102,10 +102,6 @@
 
 <body>
 
-<%- include('partials/header'); %>
-
-<h2>Welcome <%= user.name %></h2>
-<h2>Welcome <%= user._id %></h2>
 
 <h2>Index | What you can't cook now</h2>
 
@@ -235,7 +231,9 @@ Report docs.google.com</br></br>
   <li><b>Automated Testing</b></li>
   <li><b>Automated Testing</b></li>
 
-
+  <h1 class="mt-4">Dashboard</h1>
+  <p class="lead mb-3">Welcome</p>
+  <a href="/users/logout" class="btn btn-secondary">Logout</a>
 
 
 

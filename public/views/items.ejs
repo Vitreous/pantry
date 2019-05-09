@@ -11,7 +11,7 @@
   <script>
     $(document).ready(function(){
       $.ajax({
-        url: '/api/items',
+        url: '/items',
         type: 'GET',
         success: function(response){
             if (response.items.length) {
@@ -32,7 +32,7 @@
     function deleteItem(value){
       console.log(value + " from deleteItem function")
       $.ajax({
-      url: "/api/items/" + value,
+      url: "/items/" + value,
       type: 'DELETE',
       success: function(response){
         $.ajax({
@@ -61,16 +61,14 @@
 
 <body>
 
-<%- include('partials/header'); %>
-
-<h2>View contents of <%= user.name %>'s Pantry - items.html CRuD EJS</h2>
+<h2>View the contents of  your Pantry - CRuD </h2>
 
 <hr />
 
 <table style="width:50%" id="itemTable">
 </table>
 
-<form method="POST" action="/api/items">
+<form method="POST" action="/items">
   <fieldset>
     <legend>Add a new item:</legend>
     Name:<br>

@@ -14,7 +14,7 @@
   <script>
     $(document).ready(function(){
       $.ajax({
-        url: '/api/recipes',
+        url: '/recipes',
         type: 'GET',
         success: function(response){    // response contains json object in i
             var Options = "";
@@ -39,7 +39,6 @@
 </head>
 
 <body>
-<%- include('partials/header'); %>
 
   <h2>Manage Recipes CRud EJS</h2>
 
@@ -57,7 +56,7 @@
     </span>
   </div>
 
-  <form method="POST" action="/api/recipes">
+  <form method="POST" action="/recipes">
     <fieldset>
       <legend>Add a new recipe:</legend>
       Name:<br>

@@ -1,9 +1,24 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-   username: String
+    name: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: String,
+      default: Date.now
+    }
 });
 
 var model = mongoose.model('User', userSchema);
