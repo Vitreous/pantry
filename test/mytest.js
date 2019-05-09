@@ -5,7 +5,7 @@ var request = require('request');
 describe('Basic Tests', function () {
 
 
-  
+  /*
   it('Index page status', function(done) {
     request('http://localhost:3000' , function(error, response, body) {
         expect(response.statusCode).to.equal(200);
@@ -19,7 +19,7 @@ describe('Basic Tests', function () {
         done();
     });
   });
-
+  */
 
   it('should return true', () => {
     assert.equal(true, true)
