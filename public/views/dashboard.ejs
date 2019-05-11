@@ -61,19 +61,20 @@
     });
 
     function cookRecipe(value){
+      console.log(value);
       $.ajax({
         url: '/recipes/' + value,
         type: 'GET',
-        success: function(response){    // response contains json object in i
+        success: function(response){
             var itemList = response.recipe.ingredients
             $.ajax({
-              url: '/api/items',
+              url: '/items',
               type: 'GET',
               success: function(response){
                   for(var i = 0;i < response.items.length; i++) {
                     if(itemList.includes(response.items[i].name)){
                       $.ajax({
-                        url: '/api/items/' + response.items[i]._id,
+                        url: '/items/' + response.items[i]._id,
                         type: 'DELETE',
                         success: function(response){}
                         });
@@ -91,8 +92,6 @@
 <h1 class="mt-4"> My Dashboard</h1>
 <p class="lead mb-3">Welcome <%= name %></p>
 
-
-
 <h2>What you can cook now</h2>
 
 <hr />
@@ -106,123 +105,43 @@
 
 </table>
 
-40 | 55 Hours <br/>
-
 <hr/>
 
 Development CI/CD</br></br>
 
+100 Hours
+
 <ul>
 
-  <li><i><b>Extras</b></i></li>
+  Bug Tracker <br/>
+  Users able to enter empty recipes <br/>
 
-  <li><i>9am - 9.30am</i></li>
-  <li>Document</li>
+  Monday <br/>
+  1 2 3 4 5 <br/>
 
-  <li><i>1.30pm - 2pm</i></li>
-  <li>Bootstrap</li>
+  Thursday <br/>
+  1 2 3 <br/>
 
-  <li><i>2pm - 2.30pm</i></li>
-  <li>Bootstrap</li>
+  Friday <br/>
+  1 2 3 4 5 <br/>
 
-  <li><i>2.30pm - 3pm</i></li>
-  <li>Bootstrap</li>
+  Saturday <br/>
+  1 2 3 4 5 6 7 8 9 <br/>
 
-  <li><i><b>Sunday</b></i></li>
+  Sunday <br/>
+  1 2 3 4 5 6 7 8 9 10 11 12 <br/>
 
-  Lunch
+  Monday <br/>
+  1 2 3 4 5 6 7 8 9 10 11 12 <br/>
 
-  <li><i>2pm - 2.30pm</i></li>
-  <li>Document</li>
+  Tuesday - Saturday <br/>
+  1 2 3 4 5 6 7 8 9 10 11 12 13 14 <br/>
 
-  <li><i>2.30pm - 3pm</i></li>
-  <li>Recipe D</li>
-
-  Evening
-
-  <li><i>6.30pm - 7pm</i></li>
-  <li>Document</li>
-
-  <li><i>7pm - 7.30pm</i></li>
-  <li>Document</li>
-
-  Night
-
-  <li><i>10.30pm - 11pm</i></li>
-  <li>Document</li>
-
-  <li><i>11pm - 11.30pm</i></li>
-  <li>Document</li>
-
-  <li><i>11.30pm - 12am</i></li>
-  <li>Document</li>
-
-  <li><i>12am - 12.30am</i></li>
-  <li>Automated Testing</li>
+  Sunday <br/>
+  1 2 3 4 5 6 7 8 9 10 11 12 <br/>
 
 </ul>
 
 Report docs.google.com</br></br>
 
-<ul>
-
-  <li><b>10 Hr Plan           </b></li>
-  <li><b>Items Page           </b></li>
-  <li><b>Recipe Page 2 Hours  </b></li>
-  <li><b>HomePage formula 1.5Hrs </b></li>
-  <li><b>Login 2.5Hr            </b></li>
-  <li><b>1 Hour Meeting Prep </b></li>
-  <li><b>20 Hr Plan           </b></li>
-  <li><b>Cognito Research     </b></li>
-  <li><b>Delete Functionality of items </b></li>
-  <li><b>Code Cleanup</b></li>
-  <li><b>CookRecipe Function 1.Hrs</b></li>
-  <li><b>Jenkins Webhooks</b></li>
-  <li><b>Jenkins Webhook troubleshooting</b></li>
-  <li><b>Jenkins SSH configuration</b></li>
-  <li><b>Jenkins 8.5Hrs configuration</b></li>
-  <li><b>git branch set up</b></li>
-  <li><b>CookRecipe function 1.5Hr</b></li>
-  <li><b>Login 1/4 AWS Amplify</b></li>
-  <li><b>Login 2/4 AWS Amplify</b></li>
-  <li><b>AWS & CI/CD & Docker 2Hr Research</b></li>
-  <li><b>CodeDeploy Research</b></li>
-  <li><b>Testing 1Hr</b></li>
-  <li><b>Bootstrap</b></li>
-  <li><b>Login UI 2 Hours</b></li>
-  <li><b>Login Unique ID 1hr</b></li>
-  <li><b>9Hrs Document </b></li>
-
-  <li>55 Hour Plan</li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Jenkins CD</b></li>
-  <li><b>Meeting</b></li>
-  <li><b>Bug : Routing error</b></li>
-  <li><b>Test Automation</b></li>
-  <li><b>Unique ID & DB</b></li>
-  <li><b>Unique ID & DB</b></li>
-
-  <li><b>Unique ID & DB</b></li>
-  <li><b>Unique ID & DB</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-  <li><b>Document</b></li>
-
-  <li><b>Document</b></li>
-  <li><b>Routing</b></li>
-  <li><b>Automated Testing</b></li>
-  <li><b>Automated Testing</b></li>
-  <li><b>Automated Testing</b></li>
-
-  <a href="/users/logout" class="btn btn-secondary">Logout</a>
-
-
-
-</ul>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>

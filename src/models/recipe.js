@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var recipeSchema = new mongoose.Schema({
    name: String,
    ingredients: [String],
-   method: [String]
+   method: [String],
+   owner: String
 });
 
 var model = mongoose.model('Recipe', recipeSchema);
