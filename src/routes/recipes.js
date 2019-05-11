@@ -3,7 +3,7 @@ const router = express.Router();
 const Recipe = require('../models/recipe');
 
 router.get('/', (req, res) => {
-    Recipe.find({}, function(err, recipes){
+    Recipe.find({owner: req.user.id}, function(err, recipes){
         if (err) {
             return res.status(500).json({message: err.message});
         }
@@ -17,12 +17,11 @@ router.get('/:id', (req, res) => {
         if(err) {
             return res.status(500).json({err: err.message});
         }
-        console.log("Recipe Found " + recipe);
         res.json({recipe: recipe, message: 'Item Found'});
     })
 });
 
-router.post('/', function(req, res) {
+router.post('/', (req, res) => {
     var recipe = req.body;
     recipe.ingredients = recipe.ingredients.split(" ")
     for (var i = 0;i < recipe.ingredients.length; i++) {
@@ -36,11 +35,14 @@ router.post('/', function(req, res) {
         recipe.method.splice(i);
       };
     };
-    Recipe.create(recipe, function(err, item){
+    Recipe.create(recipe, (err, item) => {
         if(err) {
             return res.status(500).json({err: err.message});
         }
-        res.render('recipes');
+        res.render('recipes', {
+          name: req.user.name,
+          id: req.user._id
+        })
     })
 });
 

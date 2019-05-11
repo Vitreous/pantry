@@ -7,24 +7,27 @@ router.get('/', (req, res) => res.render('welcome'))
 //Dashboard
 router.get('/dashboard', ensureAuthenticated, (req, res) =>
   res.render('dashboard', {
-    name: req.user.name
-  }))
+    name: req.user.name,
+    id: req.user._id
+  }));
 
-router.get('/index', function(req, res) {
-      res.render('index');
-  });
+router.get('/itemspage', ensureAuthenticated, (req, res) =>
+  res.render('items', {
+    name: req.user.name,
+    id: req.user._id
+  }));
 
-router.get('/itemspage', function(req, res) {
-      res.render('items');
-  });
+router.get('/recipespage', ensureAuthenticated, (req, res) =>
+  res.render('recipes', {
+    name: req.user.name,
+    id: req.user._id
+  }));
 
-router.get('/recipespage', function(req, res) {
-      res.render('recipes');
-  });
-
-router.get('/shoppinglist', function(req, res) {
-      res.render('shoppinglist');
-  });
+router.get('/shoppinglist', (req, res) => 
+  res.render('shoppinglist', {
+    name: req.user.name,
+    id: req.user._id
+  }));
 
 
 module.exports = router;

@@ -3,12 +3,23 @@ const router = express.Router();
 const Item = require('../models/item');
 
 router.get('/', function(req, res) {
-    Item.find({}, function(err, items){
+    Item.find({owner: req.user.id}, function(err, items){
         if (err) {
             return res.status(500).json({message: err.message});
         }
         res.json({items: items});
     })
+});
+
+router.get('/:id', function(req, res) {
+  var id = req.params.id;
+  console.log(id);
+  Item.findById(req.params.id, (err, item) =>{
+      if(err) {
+          return res.status(500).json({err: err.message});
+      }
+      res.json({item: item});
+  });
 });
 
 router.post('/', function(req, res) {
@@ -17,7 +28,10 @@ router.post('/', function(req, res) {
         if(err) {
             return res.status(500).json({err: err.message});
         }
-        res.render('items');
+        res.render('items', {
+          name: req.user.name,
+          id: req.user._id
+        })
     })
 });
 
@@ -36,6 +50,18 @@ router.put('/:id', function(req, res) {
     })
 });
 
+router.delete('/:id', (req, res) => {
+    var id = req.params.id;
+    Item.findByIdAndRemove(id, (err, recipe) =>{
+        if(err) {
+            return res.status(500).json({err: err.message});
+        }
+    })
+    res.render('items', {
+      name: req.user.name,
+      id: req.user._id
+    })
+});
 
 
 module.exports = router;

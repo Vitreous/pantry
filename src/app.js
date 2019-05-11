@@ -11,7 +11,6 @@ const passport = require('passport');
 require('./database');
 
 
-var port = 3000;
 
 const app = express();
 
@@ -58,14 +57,6 @@ app.use((req, res, next) => {
 
 //app.use(parser.json());
 
-//var Item = require('./models/item');
-//var Recipe = require('./models/recipe');
-//var User = require('./models/user');
-
-
-//var router = express.Router();
-
-
 // Routes
 
 app.use('/', require('./routes/index'));
@@ -73,5 +64,5 @@ app.use('/users', require('./routes/users'));
 app.use('/items', require('./routes/items'));
 app.use('/recipes', require('./routes/recipes'));
 
-
+var port = 3000;
 app.listen(port, () =>  console.log("Server running on " + port));
