@@ -3,6 +3,7 @@ const router = express.Router();
 const Item = require('../models/item');
 
 router.get('/', function(req, res) {
+    console.log(req);
     Item.find({owner: req.user.id}, function(err, items){
         if (err) {
             return res.status(500).json({message: err.message});
@@ -11,9 +12,17 @@ router.get('/', function(req, res) {
     })
 });
 
+router.post('/test', function(req, res) {
+    Item.find({owner: req.body.user.id}, function(err, items){
+        if (err) {
+            return res.status(500).json({message: err.message});
+        }
+        res.json({items: items});
+    })
+});
+
+
 router.get('/:id', function(req, res) {
-  var id = req.params.id;
-  console.log(id);
   Item.findById(req.params.id, (err, item) =>{
       if(err) {
           return res.status(500).json({err: err.message});
