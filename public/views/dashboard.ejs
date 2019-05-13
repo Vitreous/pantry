@@ -67,11 +67,14 @@
         type: 'GET',
         success: function(response){
             var itemList = response.recipe.ingredients
+            console.log(response);
             $.ajax({
               url: '/items',
               type: 'GET',
               success: function(response){
+                console.log(response);
                   for(var i = 0;i < response.items.length; i++) {
+                    console.log(response.items[i]);
                     if(itemList.includes(response.items[i].name)){
                       $.ajax({
                         url: '/items/' + response.items[i]._id,
@@ -82,9 +85,10 @@
                     };
                   }
               });
-              document.location.reload();
+              //document.location.reload();
             }
         });
+        //document.location.reload();
     };
 
 </script>
@@ -125,14 +129,8 @@ Development CI/CD</br></br>
   Friday <br/>
   1 2 3 4 5 <br/>
 
-  Saturday <br/>
-  1 2 3 4 5 6 7 8 9 <br/>
-
-  Sunday <br/>
-  1 2 3 4 5 6 7 8 9 10 11 12 <br/>
-
   Monday <br/>
-  1 2 3 4 5 6 7 8 9 10 11 12 <br/>
+  1 2 3 4 5 <br/>
 
   Tuesday - Saturday <br/>
   1 2 3 4 5 6 7 8 9 10 11 12 13 14 <br/>

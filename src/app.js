@@ -48,6 +48,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
 //app.set("view options", { layout: false } );
 
 // Routes
@@ -58,7 +60,6 @@ app.use((req, res, next) => {
 //app.use(parser.json());
 
 // Routes
-
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/items', require('./routes/items'));
