@@ -55,14 +55,14 @@
     <fieldset>
       <legend>Add a new recipe:</legend>
       Name:<br>
-      <input type="text" name="name"><br>
+      <input type="text" name="name" id='recipe-name'><br>
       Ingredients:(Seperate by Spaces)<br>
-      <textarea name="ingredients" rows="2" cols="30">
+      <textarea name="ingredients" rows="2" cols="30" id='recipe-ingredients'>
       </textarea><br>
       Method:(Seperate by -)<br>
-      <textarea name="method" rows="7" cols="30"></textarea><br>
+      <textarea name="method" rows="7" cols="30" id='recipe-method'></textarea><br>
       <input type="hidden" name="owner" value=<%= id %>>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" id='recipe-submit'>
     </fieldset>
   </form>
 </body>
